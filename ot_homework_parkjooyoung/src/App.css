@@ -1,0 +1,350 @@
+body {
+  overflow: hidden; /* 스크롤 방지 */
+  height: 100%;
+}
+
+.App {
+  text-align: center;
+  font-family: 'SUIT-Regular';
+}
+
+.introBlock {
+  /* 중앙 배치 및 위치 기준점 중앙 설정 */
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.intro {
+  opacity: 0;
+  font-size: 30vh;
+  letter-spacing: -1vh; /* 자간 설정 */
+  animation: introGradation 3s forwards cubic-bezier(0.5, 0, 0, 1); /* 애니메이션 설정 */
+}
+
+.intro span {
+  position: relative;
+  display: inline-block; /*inline은 span취급 하며 크기나 위치 설정이 적용되지 않는다. 따라서 수정을 원한다면 inline-block 등으로 변경 */
+}
+
+
+.letter1 {
+  animation: introBounce 1s 1.5s;
+}
+
+.letter2 {
+  animation: introBounce 1s 1.6s;
+}
+
+.letter3 {
+  animation: introBounce 1s 1.7s;
+}
+
+.letter4 {
+  animation: introBounce 1s 1.8s;
+}
+
+.letter5 {
+  animation: introBounce 1s 1.9s;
+}
+
+.greetingBlock {
+  font-size: 13vh;
+  letter-spacing: -1vh;
+  opacity: 0.0;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  animation: greetingGradation 2s 3.3s forwards;
+}
+
+.greetingBlock2 {
+
+  font-size: 3vh;
+  letter-spacing: -0.2vh;
+  opacity: 0.0;
+  position: absolute;
+  left: 23%;
+  top: -4%; /* 위에 숨어 있다가 나오기 */
+  transform: translate(-50%, -50%);
+  animation: greetingGradation2 2s 3.3s forwards;
+}
+
+.greeting {
+  animation: greetingBounce1 3s 8s infinite ease-in-out;
+}
+
+.greeting2 {
+  animation: greetingBounce2 3s 9s infinite ease-in-out;
+}
+
+.blackRec {
+  position: absolute;
+  width: 100%;
+  height: 0.3%;
+  top: 19%;
+  background-color: black;
+  transform: translateX(-100%); /* X축 이동을 통해 숨기기 */
+  animation: recGradationRight 1s 4.5s forwards;
+}
+
+.blackRec2 {
+  position: absolute;
+  width: 100%;
+  height: 0.3%;
+  top: 81%;
+  background-color: black;
+  transform: translateX(100%);
+  animation: recGradationLeft 1s 4.5s forwards;
+}
+
+.blackRec3 {
+
+  border-left: .4vh solid black;
+  height: 100%;
+  position: absolute;
+  left: 5%;
+  margin-left: -3px;
+  transform: translateY(-100%);
+  animation: recGradationTop 1s 4.5s forwards;
+}
+
+.blackRec4 {
+
+  border-left: .4vh solid black;
+  height: 100%;
+  position: absolute;
+  left: 41%;
+  margin-left: -3px;
+  transform: translateY(100%);
+  animation: recGradationBottom 1s 4.5s forwards;
+}
+
+
+.imgBlock {
+  position: absolute;
+  left: 23%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  animation: imgGradation 1s 5.5s forwards;
+
+}
+
+.profile {
+  height: 50vmin;
+  border: 0.3vh solid black;
+}
+
+.textBlock {
+  text-align: left;
+  width: 50%;
+  position: absolute;
+  left: 70%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  letter-spacing: -0.3vh;
+
+}
+
+.name {
+  font-size: 4vh;
+  opacity: 0;
+  animation: textGradation 1s 6s forwards;
+}
+
+.like {
+  font-size: 4vh;
+  opacity: 0;
+  animation: textGradation 1s 6.5s forwards;
+}
+
+.goal {
+  font-size: 4vh;
+  opacity: 0;
+  animation: textGradation 1s 7s forwards;
+}
+
+.ntmy {
+  font-size: 4vh;
+  opacity: 0;
+  animation: textGradation 1s 7.5s forwards;
+}
+
+/* 인트로 블럭용 애니메이션 키프레임 */
+@keyframes introGradation {
+  0% {
+    transform: scale(0);
+  }
+
+  25% {
+    transform: scale(2);
+    opacity: 1;
+  }
+
+  35% {
+    transform: scale(1);
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+/* 인트로 글자 튀어오르는 애니메이션 키프레임 */
+@keyframes introBounce {
+
+  0%,
+  40%,
+  100% {
+    transform: translateY(0)
+  }
+
+  20% {
+    transform: translateY(-3vh)
+  }
+}
+
+/* 환영 문구 애니메이션 키프레임 */
+@keyframes greetingGradation {
+  0% {
+    opacity: 0.0;
+  }
+
+  50% {
+    opacity: 1.0;
+    top: 50%;
+    left: 50%;
+    font-size: 13vh;
+    letter-spacing: -1vh;
+  }
+
+  100% {
+    opacity: 1.0;
+    top: 104%;
+    left: 23%;
+    font-size: 3vh;
+    letter-spacing: -0.2vh;
+  }
+}
+
+/* 환영 문구 애니메이션 키프레임2 */
+@keyframes greetingGradation2 {
+  0% {
+    opacity: 0.0;
+  }
+
+  100% {
+    opacity: 1.0;
+  }
+}
+
+/* 환영 문구 반복 애니메이션 키프레임 */
+@keyframes greetingBounce1 {
+
+  0%,
+  40%,
+  100% {
+    transform: translateY(0);
+  }
+
+  20% {
+    transform: translateY(-15vh);
+  }
+}
+
+/* 환영 문구 반복 애니메이션 키프레임2 */
+@keyframes greetingBounce2 {
+
+  0%,
+  40%,
+  100% {
+    transform: translateY(0);
+  }
+
+  20% {
+    transform: translateY(15vh);
+  }
+}
+
+/* 격자선 애니메이션 키프레임 */
+@keyframes recGradationRight {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(0%);
+  }
+}
+
+/* 격자선 애니메이션 키프레임2 */
+@keyframes recGradationLeft {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0%);
+  }
+}
+
+/* 격자선 애니메이션 키프레임3 */
+@keyframes recGradationTop {
+  from {
+    transform: translateY(-100%);
+  }
+
+  to {
+    transform: translateY(0%);
+  }
+}
+
+/* 격자선 애니메이션 키프레임4 */
+@keyframes recGradationBottom {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0%);
+  }
+}
+
+/* 사진 애니메이션 키프레임 */
+@keyframes imgGradation {
+  from {
+    opacity: 0.0;
+  }
+
+  to {
+    opacity: 1.0;
+  }
+}
+
+/* 텍스트 애니메이션 키프레임 */
+@keyframes textGradation {
+  from {
+    opacity: 0.0;
+    transform: translateX(-10vh);
+  }
+
+  to {
+    opacity: 1.0;
+    transform: translateX(0);
+  }
+}
+
+/* 폰트 설정 */
+@font-face {
+  font-family: 'SUIT-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
