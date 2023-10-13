@@ -1,5 +1,6 @@
 import styled from "styled-components"
-import profile from "./assets/profile.png"
+import profile from "../assets/profile.png"
+import { Link } from 'react-router-dom';
 
 /* 프로파일 구역 전체 컨테이너 스타일 */
 const Container = styled.div`
@@ -72,7 +73,7 @@ function Profile(props) {
 
             {/* 왼쪽 이미지 구역 DIV*/}
             <Div width="35%" justifyContent="center">
-                <Img src={profile}></Img>
+                <Link to="/editProfile" ><Img src={profile}></Img></Link>
             </Div>
 
             {/* 오른쪽 텍스트 구역 DIV*/}
@@ -80,7 +81,7 @@ function Profile(props) {
 
                 {/* 오른쪽 텍스트 구역 중 상단 DIV*/}
                 <Div>
-                    <Text width="15%" fontSize="2.5vh" fontWeight="500">Woochal</Text>
+                    <Text width="15%" fontSize="2.5vh" fontWeight="500">{props.user.name}</Text>
                     <Button>팔로우</Button>
                 </Div>
 
@@ -93,7 +94,7 @@ function Profile(props) {
 
                 {/* 오른쪽 텍스트 구역 중 하단 DIV*/}
                 <Div>
-                    <Text width="50%" padding="1vh 0vh 0vh 0vh">Pay if forward</Text>
+                    <Text width="50%" padding="1vh 0vh 0vh 0vh">{props.user.intro}</Text>
                 </Div>
 
             </Div>

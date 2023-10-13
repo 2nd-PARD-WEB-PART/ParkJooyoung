@@ -1,13 +1,16 @@
 import styled from "styled-components"
-import svg1 from "./assets/Posts.svg"
-import svg2 from "./assets/Save.svg"
-import svg3 from "./assets/Tagged.svg"
-import symbol from "./assets/symbol.svg"
-import logo from "./assets/Original.png"
+import svg1 from "../assets/Posts.svg"
+import svg2 from "../assets/Save.svg"
+import svg3 from "../assets/Tagged.svg"
+import FeedImg from "./FeedImg"
+import { Link } from 'react-router-dom';
+
 
 /* 포스트 구역 전체 컨테이너 스타일*/
 const Container = styled.div`
-    display: block;
+    display: flex;
+    flex-direction: column;
+    position: relative;
     justify-content: center;
     align-items: center;
     background-color: white;
@@ -17,6 +20,7 @@ const Container = styled.div`
 
 const Div = styled.div`
     display: ${props => props.display || 'flex'};
+    flex-direction: ${props => props.flexDirection || 'row'};
     justify-content: ${props => props.justifyContent || 'start'};
     width: ${props => props.width || '100%'};
     height: ${props => props.height || '100%'};
@@ -24,17 +28,19 @@ const Div = styled.div`
     padding: ${props => props.padding || '0vh 0vh 0vh 0vh'};
     background-color: ${props => props.backgroundColor || 'white'};
     color: ${props => props.color || 'black'};
+    gap: 4px;
 `;
 
 const Hr = styled.hr`
     border: 0.1vh solid #e0e0e0;
+    width: 100%;
 `;
 
 const Hr2 = styled.hr`
-    width: 6.2vh;
+    width: 6%;
     border: 0.1vh solid gray;
     margin-top: -1vh;
-    margin-left: 40.5vh;
+    margin-left: 36%;
 `;
 
 const A = styled.a`
@@ -52,9 +58,17 @@ const Img = styled.img`
 `;
 
 /* 피드 구역 이미지 용 DIV 스타일 */
-const FeedDiv = styled.div`
-    width: 37vh;
-    height: 37vh;
+const FeedDiv = styled(Link)`
+    width: 100%;
+    max-width: 100%; 
+    position: relative;
+
+    &::before {
+        content: '';
+        padding-top: 100%; 
+        display: block;
+    }
+    
     display: flex;
     justify-content: center;
     align-items: center;
@@ -62,7 +76,13 @@ const FeedDiv = styled.div`
 `;
 
 const Feed = styled.img`
+    position: absolute;
+    width: 70%;
+   
+    
 `;
+
+
 
 
 
@@ -84,15 +104,22 @@ function Post(props) {
             </Div>
 
             {/* 피드 이미지 구역 DIV*/}
-            <Div justifyContent="space-between" margin="0.7vh 0 0 0">
-                <FeedDiv><Feed src={logo} /></FeedDiv>
-                <FeedDiv><Feed src={symbol} /></FeedDiv>
-                <FeedDiv><Feed src={logo} /></FeedDiv>
-            </Div>
-            <Div justifyContent="space-between" margin="0.7vh 0 0 0">
-                <FeedDiv><Feed src={symbol} /></FeedDiv>
-                <FeedDiv><Feed src={logo} /></FeedDiv>
-                <FeedDiv><Feed src={symbol} /></FeedDiv>
+            <Div flexDirection="column">
+                <Div justifyContent="space-between" >
+                    <FeedImg img={props.logoImg} />
+                    <FeedImg img={props.symbolImg} />
+                    <FeedImg img={props.logoImg} />
+                </Div>
+                <Div justifyContent="space-between" >
+                    <FeedImg img={props.symbolImg} />
+                    <FeedImg img={props.logoImg} />
+                    <FeedImg img={props.symbolImg} />
+                </Div>
+                <Div justifyContent="space-between" >
+                    <FeedImg img={props.logoImg} />
+                    <FeedImg img={props.symbolImg} />
+                    <FeedImg img={props.logoImg} />
+                </Div>
             </Div>
 
         </Container>
