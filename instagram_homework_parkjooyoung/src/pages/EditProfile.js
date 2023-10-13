@@ -20,7 +20,12 @@ const Div = styled.div`
     margin: ${props => props.margin || '0vh 0vh 0vh 0vh'};
     padding: ${props => props.padding || '0vh 0vh 0vh 0vh'};
     background-color: ${props => props.backgroundColor || 'white'};
-    border: ${props => props.border || '0.5px solid black'};
+    border: ${props => props.border || ''};
+    border-right: ${props => props.borderRight || ''};
+    border-left: ${props => props.borderLeft || ''};
+    border-top: ${props => props.borderTop || ''};
+    box-sizing: ${props => props.boxSizing || 'content-box'};
+    font-weight: ${props => props.fontWeight || 'normal'};
 `;
 
 const Form = styled.form`
@@ -96,14 +101,15 @@ function EditProfile(props) {
             {/* 페이지 헤더 */}
             <Header />
             <Div justifyContent="center" margin="3rem 0 0 0">
-                <Div width="60%" height="60vh">
-                    <Div width="20%" flexDirection="column">
-                        <Div flexDirection="column" height="70%">
-                            <Div>프로필 편집</Div>
-                            <Div>비밀번호 편집</Div>
+                <Div width="60%" height="60vh" border="0.5px solid lightgray">
+                    <Div width="20%" flexDirection="column" borderRight="0.3px solid lightgray">
+                        <Div flexDirection="column" height="15vh" >
+                            <Div justifyContent="start" alignItems="center" padding="1rem 0 0 3rem" boxSizing="border-box" borderLeft="3px solid black">프로필 편집</Div>
+                            <Div justifyContent="start" alignItems="center" padding="1rem 0 0 3rem" boxSizing="border-box">비밀번호 편집</Div>
                         </Div>
-                        <Div>
-                            <Img width="100%" src={AccountCenter}></Img>
+                        <Div height="45vh" />
+                        <Div height="40vh" alignItems="center" borderTop="0.3px solid lightgray">
+                            <Img width="80%" src={AccountCenter}></Img>
                         </Div>
                     </Div>
                     <Div width="80%"  >
@@ -111,37 +117,37 @@ function EditProfile(props) {
                             <Div width="80%" height="20%">
                                 <Div width="20%" alignItems="center"><Img borderRadius="20rem" border="0.1px solid #e0e0e0;" src={Profile}></Img></Div>
                                 <Div width="80%" flexDirection="column">
-                                    <Div justifyContent="start" alignItems="end">{props.user.name}</Div>
+                                    <Div justifyContent="start" alignItems="end" fontWeight="bold">{props.user.name}</Div>
                                     <Div justifyContent="start"><Button2 width="10rem" backgroundColor="white" color="#0095F5" textAlign="start" >프로필 사진 바꾸기</Button2></Div>
                                 </Div>
                             </Div>
                             <Form width="80%" height="15%" >
                                 <Div height="5rem">
-                                    <Div width="20%" justifyContent="end" alignItems="center"><Label>사용자 이름</Label></Div>
+                                    <Div width="20%" justifyContent="end" alignItems="center" padding="0 2rem 0 0" boxSizing="border-box" fontWeight="bold"><Label>사용자 이름</Label></Div>
                                     <Div width="80%" justifyContent="start" alignItems="center"><Input type="text" name="name" value={userCur.name} onChange={handleChange} /></Div>
 
 
                                 </Div>
                                 <Div height="5rem">
-                                    <Div width="20%" justifyContent="end" alignItems="center"><Label>소개</Label></Div>
+                                    <Div width="20%" justifyContent="end" alignItems="center" padding="0 2rem 0 0" boxSizing="border-box" fontWeight="bold"><Label>소개</Label></Div>
                                     <Div width="80%" justifyContent="start" alignItems="center"><Input type="text" name="intro" value={userCur.intro} onChange={handleChange} /></Div>
 
 
                                 </Div>
                                 <Div height="5rem">
-                                    <Div width="20%" justifyContent="end" alignItems="center"><Label>웹사이트</Label></Div>
+                                    <Div width="20%" justifyContent="end" alignItems="center" padding="0 2rem 0 0" boxSizing="border-box" fontWeight="bold"><Label>웹사이트</Label></Div>
                                     <Div width="80%" justifyContent="start" alignItems="center"><Input type="text" name="web" value={userCur.web} onChange={handleChange} /></Div>
 
 
                                 </Div>
                                 <Div height="5rem">
-                                    <Div width="20%" justifyContent="end" alignItems="center"><Label>이메일</Label></Div>
+                                    <Div width="20%" justifyContent="end" alignItems="center" padding="0 2rem 0 0" boxSizing="border-box" fontWeight="bold"><Label>이메일</Label></Div>
                                     <Div width="80%" justifyContent="start" alignItems="center"><Input type="email" name="email" value={userCur.email} onChange={handleChange} /></Div>
 
 
                                 </Div>
                                 <Div height="5rem">
-                                    <Div width="20%" justifyContent="end" alignItems="center"><Label>성별</Label></Div>
+                                    <Div width="20%" justifyContent="end" alignItems="center" padding="0 2rem 0 0" boxSizing="border-box" fontWeight="bold"><Label>성별</Label></Div>
                                     <Div width="80%" justifyContent="start" alignItems="center">
                                         <Input type="text" name="gender" value={userCur.gender} onChange={handleChange} />
                                         {/* <Label><Input type="radio" name="gender" value="male" checked={userCur.gender == "male"} onChange={handleChange} />남자</Label> */}
