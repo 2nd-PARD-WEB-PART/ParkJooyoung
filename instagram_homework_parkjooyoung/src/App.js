@@ -11,7 +11,7 @@ import Data from "./data.json"
 function App() {
   const [user, setUser] = useState({
     name: 'Woochal',
-    intro: 'Pay if forward',
+    intro: 'Pay it forward',
     web: '',
     email: '',
     gender: 'male',
