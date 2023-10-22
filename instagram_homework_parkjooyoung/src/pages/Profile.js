@@ -1,5 +1,4 @@
 import styled from "styled-components"
-import profile from "../assets/profile.png"
 import { Link } from 'react-router-dom';
 
 /* 프로파일 구역 전체 컨테이너 스타일 */
@@ -31,6 +30,7 @@ const Img = styled.img`
     border-radius: 20vh;
     margin-right: 4vh;
     border: 0.1vh solid #e0e0e0;
+    object-fit: cover;
     /* outline: 0.3vh solid red;
     outline-offset: 0.6vh; */
 `;
@@ -48,11 +48,11 @@ const Button = styled.button`
     background-color: ${props => props.backgroundColor || '#f1f1f1'};
     border: none;
     border-radius: 1vh;
-    width: 9vh;
+    width: 100px;
     height: 4vh;
     margin-top: 2vh;
     font-weight: bold;
-
+    cursor: pointer;
 `;
 
 const HLText = styled.a`
@@ -73,7 +73,7 @@ function Profile(props) {
 
             {/* 왼쪽 이미지 구역 DIV*/}
             <Div width="35%" justifyContent="center">
-                <Link to="/editProfile" ><Img src={profile}></Img></Link>
+                <Link to="/editProfile" ><Img src={props.user.profile}></Img></Link>
             </Div>
 
             {/* 오른쪽 텍스트 구역 DIV*/}
@@ -81,8 +81,8 @@ function Profile(props) {
 
                 {/* 오른쪽 텍스트 구역 중 상단 DIV*/}
                 <Div>
-                    <Text width="15%" fontSize="2.5vh" fontWeight="500">{props.user.name}</Text>
-                    <Button>팔로우</Button>
+                    <Text width="10%" fontSize="2.5vh" fontWeight="500">{props.user.name}</Text>
+                    <Link to="/editProfile"><Button>프로필 편집</Button></Link>
                 </Div>
 
                 {/* 오른쪽 텍스트 구역 중 중간 DIV*/}

@@ -2,12 +2,14 @@ import styled from "styled-components";
 import Header from "./Header";
 import AccountCenter from "../assets/account-center.svg"
 import Profile from "../assets/profile.png"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Img = styled.img`
     width: ${props => props.width || "3rem"};
+    height: ${props => props.height || "3rem"};
     border-radius: ${props => props.borderRadius || "0"};
     border: ${props => props.border || ""};
+    object-fit: cover;
 `;
 
 const Div = styled.div`
@@ -25,10 +27,12 @@ const Div = styled.div`
     border-right: ${props => props.borderRight || ''};
     border-left: ${props => props.borderLeft || ''};
     border-top: ${props => props.borderTop || ''};
+    border-radius: ${props => props.borderRadius || ''};
     box-sizing: ${props => props.boxSizing || 'content-box'};
     font-size: ${props => props.fontSize || '14px'};
     font-weight: ${props => props.fontWeight || '400'};
-    font-family: ${props => props.fontFamily || 'AppleSDGothicNeo'}
+    font-family: ${props => props.fontFamily || 'AppleSDGothicNeo'};
+    overflow: ${props => props.overflow || ''};
 `;
 
 const Form = styled.form`
@@ -57,7 +61,7 @@ const Textarea = styled.textarea`
     border: ${props => props.border || '0.5px solid lightgray'};
     padding: ${props => props.padding || '3px 0 0 7px'};
     font-weight: ${props => props.fontWeight || '500'};
-    font-family: ${props => props.fontFamily || 'AppleSDGothicNeo'}
+    font-family: ${props => props.fontFamily || 'AppleSDGothicNeo'};
 `;
 
 const Button = styled.button`
@@ -73,38 +77,94 @@ const Button = styled.button`
 
 `;
 
-const Button2 = styled.button`
-    background-color: ${props => props.backgroundColor || '#0095F6;'};
+const Input2 = styled.input`
+    display: none;
+    /* background-color: ${props => props.backgroundColor || '#0095F6;'};
     color: ${props => props.color || "black"};
     width: ${props => props.width || "4rem"};
     height: ${props => props.height || "2rem"};
     border-radius: 5px;
     border: none;
-    text-align: ${props => props.textAlign || "center"};
+    text-align: ${props => props.textAlign || "center"}; */
     
 
 `;
+
+const Label1 = styled.label`
+    background-color: white;
+    color: ${props => props.color || "#0095F6"};
+    width: ${props => props.width || "8rem"};
+    height: ${props => props.height || "2rem"};
+    text-align: ${props => props.textAlign || "start"};
+`
 
 
 function EditProfile(props) {
 
     const [userCur, setUserCur] = useState(props.user)
     const [disabled, setDisabled] = useState(true);
+    console.log(props.user.profile);
+    console.log(userCur.profile);
+    // useEffect(() => {
+
+    //     console.log(userCur);
+    //     console.log(props.user);
+    //     if (userCur === props.user) {
+    //         setDisabled(true);
+    //     }
+    //     else {
+    //         setDisabled(false);
+    //     }
+    // }, [userCur]);
 
     const handleChange = (e) => {
+        e.preventDefault();
         setUserCur({
             ...userCur,
             [e.target.name]: e.target.value,
         });
+        const updatedName = e.target.name;
+        const updatedValue = e.target.value;
+        if (updatedName === 'name' && updatedValue === props.user.name) {
+            setDisabled(true);
+        }
+        else if (updatedName === 'intro' && updatedValue === props.user.intro) {
+            setDisabled(true);
+        }
+        else if (updatedName == 'web' && updatedValue === props.user.web) {
+            setDisabled(true);
+        }
+        else if (updatedName === 'email' && updatedValue === props.user.email) {
+            setDisabled(true);
+        }
+        else if (updatedName === 'gender' && updatedValue === props.user.gender) {
+            setDisabled(true);
+        }
+        else {
+            setDisabled(false);
+        }
+    }
+    const handleFileChange = (e) => {
+        const selectedFile = e.target.files[0];
+
+        setUserCur({
+            ...userCur,
+            profile: URL.createObjectURL(selectedFile),
+        });
+
+        console.log(selectedFile);
+        console.log(userCur.profile);
         setDisabled(false);
-        console.log(e.target.name)
-        console.log(e.target.value)
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
+
+        // const uploadedImageUrl = await uploadProfileImage(userCur.profile);
+
         props.onChange(userCur);
         setDisabled(true);
+        // localStorage.setItem("name", userCur.name);
 
     }
 
@@ -114,7 +174,7 @@ function EditProfile(props) {
         <div>
 
             {/* 페이지 헤더 */}
-            <Header />
+            <Header user={props.user} />
             <Div justifyContent="center" margin="2rem 0 0 0">
                 <Div width="60%" height="70vh" border="0.5px solid lightgray">
                     <Div width="20%" flexDirection="column" borderRight="0.3px solid lightgray">
@@ -130,10 +190,18 @@ function EditProfile(props) {
                     <Div width="80%"  >
                         <Div width="90%" flexDirection="column" justifyContent="start" alignItems="center">
                             <Div width="90%" height="20%">
-                                <Div width="20%" alignItems="center"><Img borderRadius="20rem" border="0.1px solid #e0e0e0;" src={Profile}></Img></Div>
+                                <Div width="20%" alignItems="center">
+                                    <Img borderRadius="70%" border="0.1px solid #e0e0e0;" src={userCur.profile}></Img>
+                                </Div>
                                 <Div width="80%" flexDirection="column">
                                     <Div justifyContent="start" alignItems="end" fontWeight="bold">{props.user.name}</Div>
-                                    <Div justifyContent="start"><Button2 width="10rem" backgroundColor="white" color="#0095F5" textAlign="start" >프로필 사진 바꾸기</Button2></Div>
+                                    <Div justifyContent="start">
+                                        <Label1 for="profileInput">
+                                            프로필 사진 바꾸기
+                                        </Label1>
+                                        <Input2 type="file" name="profile" onChange={handleFileChange} id="profileInput" >
+                                        </Input2>
+                                    </Div>
                                 </Div>
                             </Div>
                             <Form width="90%" >

@@ -12,7 +12,7 @@ function Mypage(props) {
         <div>
 
             {/* 페이지 헤더 */}
-            <Header />
+            <Header user={props.user} />
 
             {/* 프로파일 구역 */}
             <Profile width="64%" margin="3.5vh auto 5vh auto" user={props.user}></Profile>

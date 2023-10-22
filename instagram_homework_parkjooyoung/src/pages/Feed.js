@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import Heart from "../assets/Heart.svg"
+import HeartClicked from "../assets/HeartClicked.png"
 import Comment from "../assets/Comment.svg"
 import SharePosts from "../assets/SharePosts.svg"
 import Save from "../assets/Save.svg"
@@ -7,9 +8,10 @@ import Emoji from "../assets/Emoji.svg"
 import FeedImg from "./FeedImg";
 import ProfileS from "../assets/profileS.png";
 import MoreOptions from "../assets/moreOptions.png";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import * as ReactDOM from 'react-dom';
 
 
 const Img = styled.img`
@@ -59,11 +61,29 @@ const Button = styled.button`
 function Feed(props) {
 
     const [feed, setFeed] = useState(props.feed);
+    const [imgSrc, setImgSrc] = useState(Heart);
+    const [comImgSrc, setComImgSrc] = useState(Heart);
+    const [liked, setLiked] = useState(false);
+    const [comLiked, setComLiked] = useState(true);
     const handleLikeChange = (e) => {
-        setFeed({
-            ...feed,
-            [e.target.name]: feed.like + 1,
-        });
+        console.log("변경전", liked);
+        setLiked(!liked);
+        console.log("변경후", liked);
+        if (!liked) {
+            setFeed({
+                ...feed,
+                [e.target.name]: feed.like + 1,
+            });
+            setImgSrc(HeartClicked);
+
+        }
+        else {
+            setFeed({
+                ...feed,
+                [e.target.name]: feed.like - 1,
+            });
+            setImgSrc(Heart);
+        }
     }
 
     const handleCommentChange = (e) => {
@@ -79,11 +99,14 @@ function Feed(props) {
             [e.target.name]: feed.inputComment,
         });
     }
-    const handleCommentLike = (e) => {
-        setFeed({
-            ...feed,
-            [e.target.name]: feed.comment2Like + 1,
-        });
+    const handleCommentLikeChange = (e) => {
+        setComLiked(!comLiked);
+        if (comLiked) {
+            setComImgSrc(HeartClicked);
+        }
+        else {
+            setComImgSrc(Heart);
+        }
     }
 
 
@@ -105,7 +128,7 @@ function Feed(props) {
             </Div>
             <Div width="94%" flexDirection="column" >
                 <Div alignItems="center" margin="2% 0 3% 0">
-                    <Div width="7%" alignItems="center"><Img width="2.5vh" src={Heart} name="like" onClick={handleLikeChange} /></Div>
+                    <Div width="7%" alignItems="center"><Img width="2.5vh" src={imgSrc} name="like" onClick={handleLikeChange} /></Div>
                     <Div width="7%" alignItems="center"><Img width="2.5vh" src={Comment} /></Div>
                     <Div width="7%" alignItems="center"><Img width="2.5vh" src={SharePosts} /></Div>
                     <Div width="79%" justifyContent="end"><Img width="2.5vh" src={Save} /></Div>
@@ -120,8 +143,7 @@ function Feed(props) {
                 <Div height="1rem" margin="0 0 3% 0">
                     <Div width="30%" justifyContent="start" alignItems="center" fontSize="12px" fontWeight="bold">{feed.commenter2}</Div>
                     <Div width="50%" justifyContent="start" alignItems="center" fontSize="12px" fontWeight="bold">{feed.comment2}</Div>
-                    <Div width="15%" justifyContent="end" alignItems="center"><Img width="1.5vh" src={Heart} name="comment2Like" onClick={handleCommentLike} /></Div>
-                    <Div width="5%" justifyContent="end" alignItems="center" fontSize="12px" fontWeight="bold">{feed.comment2Like}</Div>
+                    <Div width="15%" justifyContent="end" alignItems="center"><Img width="1.5vh" src={comImgSrc} name="comment2Like" onClick={handleCommentLikeChange} /></Div>
                 </Div>
             </Div>
             <Hr />

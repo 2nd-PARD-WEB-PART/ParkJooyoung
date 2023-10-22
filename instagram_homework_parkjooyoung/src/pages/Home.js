@@ -17,7 +17,7 @@ function Home(props) {
         <div>
 
             {/* 페이지 헤더 */}
-            <Header />
+            <Header user={props.user} />
             <img src={props.logo}></img>
             <Feed feed={props.feed} onChange={props.onChange} logoImg={props.logoImg} />
 

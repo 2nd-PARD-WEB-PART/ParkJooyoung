@@ -4,6 +4,7 @@ import EditProfile from './pages/EditProfile';
 import Home from './pages/Home';
 import LogoImg from "./assets/Original.png"
 import SymbolImg from "./assets/symbol.svg"
+import Profile from "./assets/profile.png"
 import './App.css';
 import { useState } from "react";
 import Data from "./data.json"
@@ -15,6 +16,7 @@ function App() {
     web: '',
     email: '',
     gender: 'male',
+    profile: Profile, // {} 빼는게 포인트
   });
 
   const handleUserChange = (e) => {
@@ -42,7 +44,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Mypage user={user} logoImg={LogoImg} symbolImg={SymbolImg} data={Data.feeds} />} />
         <Route path="/editProfile" element={<EditProfile user={user} onChange={handleUserChange} />} />
-        <Route path="/home" element={<Home feed={feed} onChange={handleFeedChange} logoImg={LogoImg} symbolImg={SymbolImg} />} />
+        <Route path="/home" element={<Home user={user} feed={feed} onChange={handleFeedChange} logoImg={LogoImg} symbolImg={SymbolImg} />} />
       </Routes>
     </Router>
   );
