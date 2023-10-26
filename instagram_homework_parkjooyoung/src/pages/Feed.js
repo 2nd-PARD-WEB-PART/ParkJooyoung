@@ -1,6 +1,4 @@
 import styled from "styled-components"
-import Heart from "../assets/Heart.svg"
-import HeartClicked from "../assets/HeartClicked.png"
 import Comment from "../assets/Comment.svg"
 import SharePosts from "../assets/SharePosts.svg"
 import Save from "../assets/Save.svg"
@@ -8,6 +6,8 @@ import Emoji from "../assets/Emoji.svg"
 import FeedImg from "./FeedImg";
 import ProfileS from "../assets/profileS.png";
 import MoreOptions from "../assets/moreOptions.png";
+import Heart from "../assets/Heart.svg"
+import HeartClicked from "../assets/HeartClicked.png"
 import React, { useState } from "react";
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -61,56 +61,76 @@ const Button = styled.button`
 function Feed(props) {
 
     const [feed, setFeed] = useState(props.feed);
-    const [imgSrc, setImgSrc] = useState(Heart);
-    const [comImgSrc, setComImgSrc] = useState(Heart);
-    const [liked, setLiked] = useState(false);
-    const [comLiked, setComLiked] = useState(true);
+    const [comments, setComments] = useState([props.comments]);
+    const [curComment, setCurComment] = useState();
+    const [imgSrc, setImgSrc] = useState(props.feed.imgLike);
+    const [liked, setLiked] = useState(props.feed.liked);
+    const [comLiked, setComLiked] = useState(props.comments.liked);
+
     const handleLikeChange = (e) => {
-        console.log("변경전", liked);
-        setLiked(!liked);
-        console.log("변경후", liked);
+        props.onhandleFeedChange(e);
         if (!liked) {
             setFeed({
                 ...feed,
                 [e.target.name]: feed.like + 1,
             });
+            setLiked(true);
             setImgSrc(HeartClicked);
-
         }
         else {
             setFeed({
                 ...feed,
                 [e.target.name]: feed.like - 1,
             });
+            setLiked(false);
             setImgSrc(Heart);
         }
     }
 
+
     const handleCommentChange = (e) => {
-        setFeed({
-            ...feed,
-            [e.target.name]: e.target.value,
-        });
+        console.log(e.target.value);
+        setCurComment(e.target.value);
 
     }
+
     const handleCommentUpload = (e) => {
-        setFeed({
-            ...feed,
-            [e.target.name]: feed.inputComment,
-        });
+        console.log(e.target);
+        console.log(e.target.value);
+        const newComment = {
+            name: props.user.name,
+            text: curComment,
+            liked: false,
+            likeImg: Heart,
+        }
+        console.log(newComment);
+        setComments([...comments, newComment]);
+        props.onhandleCommentChange(newComment);
+        setCurComment('');
     }
-    const handleCommentLikeChange = (e) => {
-        setComLiked(!comLiked);
-        if (comLiked) {
-            setComImgSrc(HeartClicked);
+
+    const handleCommentLikeChange = (index) => {
+        // props.onhandleCommentChange(index);
+        const updatedComments = [...comments];
+        if (updatedComments[index].liked) {
+            updatedComments[index] = {
+                ...updatedComments[index],
+                liked: !updatedComments[index].liked,
+                likeImg: Heart,
+            }
         }
         else {
-            setComImgSrc(Heart);
+            updatedComments[index] = {
+                ...updatedComments[index],
+                liked: !updatedComments[index].liked,
+                likeImg: HeartClicked,
+            }
         }
+
+        setComments(updatedComments);
     }
 
-
-
+    console.log(comments)
 
     return (
 
@@ -120,7 +140,7 @@ function Feed(props) {
                 <Div width="20%" justifyContent="center" alignItems="center" >
                     <Img src={ProfileS} width="4vh"></Img>
                 </Div>
-                <Div justifyContent="start" alignItems="center" fontSize="12px" fontWeight="bold">{feed.commenter1}</Div>
+                <Div justifyContent="start" alignItems="center" fontSize="12px" fontWeight="bold">{feed.feedUser}</Div>
                 <Div width="15%" justifyContent="center" alignItems="center"><Img src={MoreOptions} width="4vh"></Img></Div>
             </Div>
             <Div>
@@ -137,19 +157,25 @@ function Feed(props) {
                     좋아요 {feed.like}개
                 </Div>
                 <Div height="1rem" margin="0 0 3% 0">
-                    <Div width="20%" justifyContent="start" alignItems="center" fontSize="12px" fontWeight="bold" >{feed.commenter1}</Div>
-                    <Div width="80%" justifyContent="start" alignItems="center" fontSize="12px" fontWeight="bold">{feed.comment1}</Div>
+                    <Div width="30%" justifyContent="start" alignItems="center" fontSize="12px" fontWeight="bold" >{feed.feedUser}</Div>
+                    <Div width="70%" justifyContent="start" alignItems="center" fontSize="12px" fontWeight="bold">{feed.feedText}</Div>
                 </Div>
-                <Div height="1rem" margin="0 0 3% 0">
-                    <Div width="30%" justifyContent="start" alignItems="center" fontSize="12px" fontWeight="bold">{feed.commenter2}</Div>
-                    <Div width="50%" justifyContent="start" alignItems="center" fontSize="12px" fontWeight="bold">{feed.comment2}</Div>
-                    <Div width="15%" justifyContent="end" alignItems="center"><Img width="1.5vh" src={comImgSrc} name="comment2Like" onClick={handleCommentLikeChange} /></Div>
+                <Div margin="0 0 0 0" flexDirection="column">
+                    {comments.map((comment, index) => (
+                        <Div key={index} margin="1% 0 0 0" >
+                            <Div width="30%" justifyContent="start" alignItems="center" fontSize="12px" fontWeight="bold">{comment.name}</Div>
+                            <Div width="50%" justifyContent="start" alignItems="center" fontSize="12px" fontWeight="bold">{comment.text}</Div>
+                            <Div width="20%" justifyContent="end" alignItems="center" fontSize="12px" fontWeight="bold">
+                                <Img src={comment.likeImg} width="20%" name="liked" onClick={() => { handleCommentLikeChange(index) }}></Img>
+                            </Div>
+                        </Div>
+                    ))}
                 </Div>
             </Div>
             <Hr />
             <Div width="96%" height="2rem" margin="0 0 8px 0">
                 <Div width="9%" justifyContent="start" alignItems="center" ><Img width="2.5vh" src={Emoji} /></Div>
-                <Div width="80%" justifyContent="start" alignItems="center" ><Input type="text" placeholder="댓글 달기..." name="inputComment" value={feed.inputComment} onChange={handleCommentChange} /></Div>
+                <Div width="80%" justifyContent="start" alignItems="center" ><Input type="text" placeholder="댓글 달기..." name="inputComment" value={curComment} onChange={handleCommentChange} /></Div>
                 <Div width="11%" justifyContent="end" alignItems="center" ><Button name="comment2" onClick={handleCommentUpload} >게시</Button></Div>
             </Div>
 

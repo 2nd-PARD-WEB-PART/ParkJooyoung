@@ -5,6 +5,8 @@ import Home from './pages/Home';
 import LogoImg from "./assets/Original.png"
 import SymbolImg from "./assets/symbol.svg"
 import Profile from "./assets/profile.png"
+import Heart from "./assets/Heart.svg"
+import HeartClicked from "./assets/HeartClicked.png"
 import './App.css';
 import { useState } from "react";
 import Data from "./data.json"
@@ -25,17 +27,44 @@ function App() {
   }
   const [feed, setFeed] = useState({
     like: 222,
-    commenter1: 'supershyguy',
-    comment1: '파드 화이팅!!!',
-    commenter2: 'love_pard',
-    comment2: '',
-    comment2Like: 0,
-    inputComment: '',
+    liked: false,
+    feedUser: 'supershyguy',
+    feedText: '파드 화이팅!!!',
+    imgLike: Heart
   });
 
+  const [comments, setComments] = useState([]);
+
   const handleFeedChange = (e) => {
-    setFeed(e);
+    console.log(feed.liked)
+    if (!feed.liked) {
+      setFeed({
+        ...feed,
+        [e.target.name]: feed.like + 1,
+        liked: true,
+        imgLike: HeartClicked,
+      });
+
+    }
+    else {
+      setFeed({
+        ...feed,
+        [e.target.name]: feed.like - 1,
+        liked: false,
+        imgLike: Heart,
+      });
+      feed.liked = false;
+    }
+    console.log('app')
+    console.log(feed.liked)
+  }
+  console.log("out")
+  console.log(feed.liked)
+
+  const handleCommentChange = (e) => {
     console.log(e)
+    setComments([...comments, e]);
+    console.log(comments)
   }
 
   return (
@@ -44,7 +73,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Mypage user={user} logoImg={LogoImg} symbolImg={SymbolImg} data={Data.feeds} />} />
         <Route path="/editProfile" element={<EditProfile user={user} onChange={handleUserChange} />} />
-        <Route path="/home" element={<Home user={user} feed={feed} onChange={handleFeedChange} logoImg={LogoImg} symbolImg={SymbolImg} />} />
+        <Route path="/home" element={<Home user={user} feed={feed} comments={comments} onhandleFeedChange={handleFeedChange} onhandleCommentChange={handleCommentChange} logoImg={LogoImg} symbolImg={SymbolImg} />} />
       </Routes>
     </Router>
   );

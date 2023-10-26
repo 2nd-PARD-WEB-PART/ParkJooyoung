@@ -117,8 +117,24 @@ function EditProfile(props) {
     //     }
     // }, [userCur]);
 
+    const setInfo = (e) => {
+        setUserCur({
+            ...userCur,
+            [e.target.name]: e.target.value,
+        });
+    }
+
     const handleChange = (e) => {
         e.preventDefault();
+        // setInfo(e);
+
+        // if (userCur === props.user) {
+        //     setDisabled(true);
+        // }
+        // else {
+        //     setDisabled(false);
+        // }
+
         setUserCur({
             ...userCur,
             [e.target.name]: e.target.value,
@@ -179,8 +195,8 @@ function EditProfile(props) {
                 <Div width="60%" height="70vh" border="0.5px solid lightgray">
                     <Div width="20%" flexDirection="column" borderRight="0.3px solid lightgray">
                         <Div flexDirection="column" height="15vh" >
-                            <Div justifyContent="start" alignItems="center" padding="1rem 0 0 3rem" boxSizing="border-box" borderLeft="3px solid black">프로필 편집</Div>
-                            <Div justifyContent="start" alignItems="center" padding="1rem 0 0 3rem" boxSizing="border-box">비밀번호 편집</Div>
+                            <Div justifyContent="start" alignItems="start" padding="1rem 0 0 3rem" boxSizing="border-box" borderLeft="3px solid black">프로필 편집</Div>
+                            <Div justifyContent="start" alignItems="start" padding="1rem 0 0 3rem" boxSizing="border-box">비밀번호 편집</Div>
                         </Div>
                         <Div height="45vh" />
                         <Div height="40vh" alignItems="center" borderTop="0.3px solid lightgray">
