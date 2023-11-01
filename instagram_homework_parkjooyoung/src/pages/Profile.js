@@ -1,5 +1,7 @@
 import styled from "styled-components"
 import { Link } from 'react-router-dom';
+import { useContext } from "react";
+import UserProvider, { UserContext } from "../contexts/UserContext";
 
 /* 프로파일 구역 전체 컨테이너 스타일 */
 const Container = styled.div`
@@ -67,13 +69,14 @@ const HLText = styled.a`
 
 
 function Profile(props) {
+    const [user, setUser] = useContext(UserContext);
     return (
         /* 프로파일 구역 전체 컨테이너 */
         <Container style={{ width: props.width, margin: props.margin }}>
 
             {/* 왼쪽 이미지 구역 DIV*/}
             <Div width="35%" justifyContent="center">
-                <Link to="/editProfile" ><Img src={props.user.profile}></Img></Link>
+                <Link to="/editProfile" ><Img src={user.profile}></Img></Link>
             </Div>
 
             {/* 오른쪽 텍스트 구역 DIV*/}
@@ -81,20 +84,20 @@ function Profile(props) {
 
                 {/* 오른쪽 텍스트 구역 중 상단 DIV*/}
                 <Div>
-                    <Text width="10%" fontSize="2.5vh" fontWeight="500">{props.user.name}</Text>
+                    <Text width="10%" fontSize="2.5vh" fontWeight="500">{user.name}</Text>
                     <Link to="/editProfile"><Button>프로필 편집</Button></Link>
                 </Div>
 
                 {/* 오른쪽 텍스트 구역 중 중간 DIV*/}
                 <Div width="100%">
-                    <HLText href="">게시물 3</HLText>
-                    <HLText href="">팔로워 255</HLText>
-                    <HLText href="">팔로우 500</HLText>
+                    <HLText href="">게시물 {user.feed}</HLText>
+                    <HLText href="">팔로워 {user.follower}</HLText>
+                    <HLText href="">팔로우 {user.follow}</HLText>
                 </Div>
 
                 {/* 오른쪽 텍스트 구역 중 하단 DIV*/}
                 <Div>
-                    <Text width="50%" padding="1vh 0vh 0vh 0vh">{props.user.intro}</Text>
+                    <Text width="50%" padding="1vh 0vh 0vh 0vh">{user.intro}</Text>
                 </Div>
 
             </Div>

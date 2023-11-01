@@ -8,10 +8,12 @@ import ProfileS from "../assets/profileS.png";
 import MoreOptions from "../assets/moreOptions.png";
 import Heart from "../assets/Heart.svg"
 import HeartClicked from "../assets/HeartClicked.png"
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import * as ReactDOM from 'react-dom';
+import { UserContext } from "../contexts/UserContext"
+import { FeedContext } from "../contexts/FeedContext"
 
 
 const Img = styled.img`
@@ -59,31 +61,27 @@ const Button = styled.button`
 
 
 function Feed(props) {
-
-    const [feed, setFeed] = useState(props.feed);
-    const [comments, setComments] = useState([props.comments]);
+    const [user, setUser] = useContext(UserContext);
+    const [feed, setFeed, comments, setComments] = useContext(FeedContext);
     const [curComment, setCurComment] = useState();
-    const [imgSrc, setImgSrc] = useState(props.feed.imgLike);
-    const [liked, setLiked] = useState(props.feed.liked);
-    const [comLiked, setComLiked] = useState(props.comments.liked);
 
     const handleLikeChange = (e) => {
-        props.onhandleFeedChange(e);
-        if (!liked) {
+        console.log(feed.liked)
+        if (!feed.liked) {
             setFeed({
                 ...feed,
                 [e.target.name]: feed.like + 1,
+                liked: true,
+                imgLike: HeartClicked,
             });
-            setLiked(true);
-            setImgSrc(HeartClicked);
         }
         else {
             setFeed({
                 ...feed,
                 [e.target.name]: feed.like - 1,
+                liked: false,
+                imgLike: Heart,
             });
-            setLiked(false);
-            setImgSrc(Heart);
         }
     }
 
@@ -95,22 +93,18 @@ function Feed(props) {
     }
 
     const handleCommentUpload = (e) => {
-        console.log(e.target);
-        console.log(e.target.value);
         const newComment = {
-            name: props.user.name,
+            name: user.name,
             text: curComment,
             liked: false,
             likeImg: Heart,
         }
         console.log(newComment);
         setComments([...comments, newComment]);
-        props.onhandleCommentChange(newComment);
         setCurComment('');
     }
 
     const handleCommentLikeChange = (index) => {
-        // props.onhandleCommentChange(index);
         const updatedComments = [...comments];
         if (updatedComments[index].liked) {
             updatedComments[index] = {
@@ -126,11 +120,8 @@ function Feed(props) {
                 likeImg: HeartClicked,
             }
         }
-
         setComments(updatedComments);
     }
-
-    console.log(comments)
 
     return (
 
@@ -144,11 +135,11 @@ function Feed(props) {
                 <Div width="15%" justifyContent="center" alignItems="center"><Img src={MoreOptions} width="4vh"></Img></Div>
             </Div>
             <Div>
-                <FeedImg img={props.logoImg} />
+                <FeedImg img={feed.feedImg} />
             </Div>
             <Div width="94%" flexDirection="column" >
                 <Div alignItems="center" margin="2% 0 3% 0">
-                    <Div width="7%" alignItems="center"><Img width="2.5vh" src={imgSrc} name="like" onClick={handleLikeChange} /></Div>
+                    <Div width="7%" alignItems="center"><Img width="2.5vh" src={feed.imgLike} name="like" onClick={handleLikeChange} /></Div>
                     <Div width="7%" alignItems="center"><Img width="2.5vh" src={Comment} /></Div>
                     <Div width="7%" alignItems="center"><Img width="2.5vh" src={SharePosts} /></Div>
                     <Div width="79%" justifyContent="end"><Img width="2.5vh" src={Save} /></Div>

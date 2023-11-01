@@ -1,5 +1,7 @@
 import styled from "styled-components"
 import { Link } from 'react-router-dom';
+import { useContext } from "react";
+import { FeedContext } from "../contexts/FeedContext";
 
 
 /* 피드 구역 이미지 용 DIV 스타일 */
@@ -31,10 +33,9 @@ const Feed = styled.img`
 
 
 function FeedImg(props) {
+    const [feed] = useContext(FeedContext);
     return (
-
-        <FeedDiv to="/home"><Feed src={props.img} /></FeedDiv>
-
+        <FeedDiv to="/home"><Feed src={feed.feedImg} /></FeedDiv>
     )
 }
 

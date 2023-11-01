@@ -4,6 +4,8 @@ import svg2 from "../assets/Save.svg"
 import svg3 from "../assets/Tagged.svg"
 import FeedImg from "./FeedImg"
 import { Link } from 'react-router-dom';
+import { useContext } from "react"
+import { FeedContext } from "../contexts/FeedContext"
 
 
 /* 포스트 구역 전체 컨테이너 스타일*/
@@ -88,6 +90,7 @@ const Feed = styled.img`
 
 
 function Post(props) {
+    const [feed] = useContext(FeedContext);
     return (
         /* 포스트 구역 전체 컨테이너 */
         <Container style={{ width: props.width }}>
@@ -106,19 +109,19 @@ function Post(props) {
             {/* 피드 이미지 구역 DIV*/}
             <Div flexDirection="column">
                 <Div justifyContent="space-between" >
-                    <FeedImg img={props.logoImg} />
-                    <FeedImg img={props.symbolImg} />
-                    <FeedImg img={props.logoImg} />
+                    <FeedImg />
+                    <FeedImg />
+                    <FeedImg />
                 </Div>
                 <Div justifyContent="space-between" >
-                    <FeedImg img={props.symbolImg} />
-                    <FeedImg img={props.logoImg} />
-                    <FeedImg img={props.symbolImg} />
+                    <FeedImg />
+                    <FeedImg />
+                    <FeedImg />
                 </Div>
                 <Div justifyContent="space-between" >
-                    <FeedImg img={props.logoImg} />
-                    <FeedImg img={props.symbolImg} />
-                    <FeedImg img={props.logoImg} />
+                    <FeedImg />
+                    <FeedImg />
+                    <FeedImg />
                 </Div>
             </Div>
 

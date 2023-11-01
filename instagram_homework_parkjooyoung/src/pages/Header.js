@@ -4,9 +4,10 @@ import Home from "../assets/Home-fill.svg"
 import NewPost from "../assets/NewPosts.svg"
 import Heart from "../assets/Heart.svg"
 import Profile from "../assets/profile.png"
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { UserContext } from "../contexts/UserContext"
 
 /* 페이지 헤더 스타일*/
 const HeaderDiv = styled.div`
@@ -51,7 +52,7 @@ const Hr = styled.hr`
 
 
 function Header(props) {
-
+    const [user, setUser] = useContext(UserContext);
 
     return (
 
@@ -73,7 +74,7 @@ function Header(props) {
                     <Div width="25px" margin="0 20px 0 0">
                         <Img width="30px" src={Heart} />
                     </Div>
-                    <Link to="/"><Img width="30px" height="30px" borderRadius="70%" src={props.user.profile} /></Link>
+                    <Link to="/"><Img width="30px" height="30px" borderRadius="70%" src={user.profile} /></Link>
                 </Div>
             </HeaderDiv>
             <Hr />
