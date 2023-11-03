@@ -9,6 +9,7 @@ import { useContext } from "react";
 function Mypage(props) {
 
     return (
+
         /* 페이지 전체 컨테이너 */
         <div>
 
