@@ -59,38 +59,14 @@ const Img = styled.img`
     margin-right: 1vh;
 `;
 
-/* 피드 구역 이미지 용 DIV 스타일 */
-const FeedDiv = styled(Link)`
-    width: 100%;
-    max-width: 100%; 
-    position: relative;
-
-    &::before {
-        content: '';
-        padding-top: 100%; 
-        display: block;
-    }
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: black;
-`;
-
-const Feed = styled.img`
-    position: absolute;
-    width: 70%;
-   
-    
-`;
-
-
-
 
 
 
 function Post(props) {
+
+    /* 피드 데이터 호출 */
     const [feed] = useContext(FeedContext);
+
     return (
         /* 포스트 구역 전체 컨테이너 */
         <Container style={{ width: props.width }}>
@@ -109,6 +85,7 @@ function Post(props) {
             {/* 피드 이미지 구역 DIV*/}
             <Div flexDirection="column">
                 <Div justifyContent="space-between" >
+                    {/* 피드 이미지 */}
                     <FeedImg />
                     <FeedImg />
                     <FeedImg />

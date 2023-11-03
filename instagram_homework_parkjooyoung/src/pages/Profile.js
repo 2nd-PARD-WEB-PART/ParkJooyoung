@@ -33,8 +33,6 @@ const Img = styled.img`
     margin-right: 4vh;
     border: 0.1vh solid #e0e0e0;
     object-fit: cover;
-    /* outline: 0.3vh solid red;
-    outline-offset: 0.6vh; */
 `;
 
 const Text = styled.p`
@@ -69,7 +67,10 @@ const HLText = styled.a`
 
 
 function Profile(props) {
+
+    /* 유저 데이터 호출 */
     const [user, setUser] = useContext(UserContext);
+
     return (
         /* 프로파일 구역 전체 컨테이너 */
         <Container style={{ width: props.width, margin: props.margin }}>

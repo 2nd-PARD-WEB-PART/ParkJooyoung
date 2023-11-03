@@ -7,7 +7,7 @@ import { useContext } from "react";
 
 
 function Mypage(props) {
-    console.log(props.data)
+
     return (
         /* 페이지 전체 컨테이너 */
         <div>

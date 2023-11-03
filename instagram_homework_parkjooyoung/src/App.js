@@ -13,12 +13,18 @@ import Data from "./data.json"
 import UserProvider from "./contexts/UserContext";
 import FeedProvider from "./contexts/FeedContext";
 
+/* 페이지 출력 */
 function App() {
 
   return (
+
+    /* 페이지 라우팅 */
     <Router>
-      {/* 페이지 출력 */}
+
+      {/* 유저 데이터 컨텍스트 */}
       <UserProvider>
+
+        {/* 피드 데이터 컨텍스트 */}
         <FeedProvider>
           <Routes>
             <Route path="/" element={<Mypage data={Data.feeds} />} />

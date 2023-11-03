@@ -18,14 +18,16 @@ const Container = styled.div`
   z-index: 10;
 `;
 
-/* 페이지 헤더 스타일*/
+/* 데스크톱용 헤더 스타일 */
 const HeaderDivLarge = styled.div`
+    /* 데스크톱 크키 아닐 경우 비활성화*/
     @media screen and (max-width: 450px) {
         display: none;
     };
     @media screen and (min-width: 450px) and (max-width: 750px) {
         display: none;
     };
+    /* 데스크톱 크기일 때만 활성화*/
     @media screen and (min-width: 750px) {
         width: 64%;
         display: flex;
@@ -35,6 +37,7 @@ const HeaderDivLarge = styled.div`
     };
 `;
 
+/* 태블릿용 헤더 스타일*/
 const HeaderDivMid = styled.div`
     @media screen and (max-width: 450px) {
         display: none;
@@ -51,6 +54,7 @@ const HeaderDivMid = styled.div`
     };
 `;
 
+/* 모바일용 헤더 스타일*/
 const HeaderDivSmall = styled.div`
     @media screen and (max-width: 450px) {
         width: 80%;
@@ -104,7 +108,6 @@ const Input = styled.input`
 
 const Hr = styled.hr`
     border: 0.1vh solid #e0e0e0;
-    /* margin-top: ${props => props.marginTop || '-1px'}; */
 `;
 
 
@@ -112,6 +115,8 @@ const Hr = styled.hr`
 
 
 function Header(props) {
+
+    /* 유저 데이터 호출 */
     const [user, setUser] = useContext(UserContext);
 
     return (
@@ -119,9 +124,13 @@ function Header(props) {
         /* 페이지 전체 컨테이너 */
         <Container>
 
-            {/* 페이지 헤더 */}
+            {/*데스크톱용 헤더 */}
             <HeaderDivLarge>
+
+                {/* 좌측 인스타 로고 */}
                 <Link to="/home"><Img src={Insta} marginTop="20px" /></Link>
+
+                {/* 우측 메뉴바 */}
                 <Div alignItems="center">
                     <Link to="/home">
                         <Div width="20px" margin="0 20px 0 0">
@@ -136,7 +145,10 @@ function Header(props) {
                     </Div>
                     <Link to="/"><Img width="30px" height="30px" borderRadius="70%" src={user.profile} /></Link>
                 </Div>
+
             </HeaderDivLarge>
+
+            {/*태블릿용 헤더 */}
             <HeaderDivMid>
                 <Link to="/home"><Img src={Insta} marginTop="20px" /></Link>
                 <Div alignItems="center">
@@ -154,6 +166,8 @@ function Header(props) {
                     <Link to="/"><Img width="30px" height="30px" borderRadius="70%" src={user.profile} /></Link>
                 </Div>
             </HeaderDivMid>
+
+            {/*모바일용 헤더 */}
             <HeaderDivSmall>
                 <Link to="/home"><Img src={Cam} marginTop="18px" width="30px" /></Link>
                 <Div alignItems="center" justifyContent="center">

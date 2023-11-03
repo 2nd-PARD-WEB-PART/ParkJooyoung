@@ -10,6 +10,7 @@ const FeedDiv = styled(Link)`
     max-width: 100%; 
     position: relative;
 
+    /* 이미지 X Y 축 비율 유지 */
     &::before {
         content: '';
         padding-top: 100%; 
@@ -33,7 +34,10 @@ const Feed = styled.img`
 
 
 function FeedImg(props) {
+
+    /* 피드 데이터 호출 */
     const [feed] = useContext(FeedContext);
+
     return (
         <FeedDiv to="/home"><Feed src={feed.feedImg} /></FeedDiv>
     )

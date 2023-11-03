@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import Header from "./Header";
 import AccountCenter from "../assets/account-center.svg"
-import Profile from "../assets/profile.png"
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../contexts/UserContext";
 
@@ -80,15 +79,6 @@ const Button = styled.button`
 
 const Input2 = styled.input`
     display: none;
-    /* background-color: ${props => props.backgroundColor || '#0095F6;'};
-    color: ${props => props.color || "black"};
-    width: ${props => props.width || "4rem"};
-    height: ${props => props.height || "2rem"};
-    border-radius: 5px;
-    border: none;
-    text-align: ${props => props.textAlign || "center"}; */
-    
-
 `;
 
 const Label1 = styled.label`
@@ -101,36 +91,25 @@ const Label1 = styled.label`
 
 
 function EditProfile(props) {
+
+    /* 유저 데이터 호출 */
     const [user, setUser] = useContext(UserContext);
+
+    /* 유저 데이터 수정용 변수 */
     const [userCur, setUserCur] = useState(user)
+
+    /* 버튼 활성화/비활성화용 변수 */
     const [disabled, setDisabled] = useState(true);
-    // useEffect(() => {
 
-    //     console.log(userCur);
-    //     console.log(props.user);
-    //     if (userCur === props.user) {
-    //         setDisabled(true);
-    //     }
-    //     else {
-    //         setDisabled(false);
-    //     }
-    // }, [userCur]);
-
-    // const setInfo = (e) => {
-    //     setUserCur({
-    //         ...userCur,
-    //         [e.target.name]: e.target.value,
-    //     });
-    // }
-
+    /* 유저 인풋 핸들러 */
     const handleChange = (e) => {
         e.preventDefault();
-        // setInfo(e);
         setUserCur({
             ...userCur,
             [e.target.name]: e.target.value,
         });
 
+        /* 초기값과 비교를 통해 버튼 활성화/비활성화 */
         const updatedName = e.target.name;
         const updatedValue = e.target.value;
         if (updatedName === 'name' && updatedValue === user.name) {
@@ -152,6 +131,8 @@ function EditProfile(props) {
             setDisabled(false);
         }
     }
+
+    /* 프로필 이미지 수정 핸들러 */
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0];
 
@@ -162,6 +143,7 @@ function EditProfile(props) {
         setDisabled(false);
     }
 
+    /* 유저 인풋 저장 핸들러 */
     const handleSubmit = async (e) => {
         e.preventDefault()
         setUser(userCur);
@@ -177,8 +159,12 @@ function EditProfile(props) {
 
             {/* 페이지 헤더 */}
             <Header />
+
+            {/* 프로필 수정 DIV */}
             <Div justifyContent="center" margin="2rem 0 0 0">
                 <Div width="60%" height="70vh" border="0.5px solid lightgray">
+
+                    {/* 좌측 탭 DIV */}
                     <Div width="20%" flexDirection="column" borderRight="0.3px solid lightgray">
                         <Div flexDirection="column" height="15vh" >
                             <Div justifyContent="start" alignItems="start" padding="1rem 0 0 3rem" boxSizing="border-box" borderLeft="3px solid black">프로필 편집</Div>
@@ -189,8 +175,12 @@ function EditProfile(props) {
                             <Img width="80%" src={AccountCenter}></Img>
                         </Div>
                     </Div>
+
+                    {/* 데이터 수정 DIV */}
                     <Div width="80%"  >
                         <Div width="90%" flexDirection="column" justifyContent="start" alignItems="center">
+
+                            {/* 프로필 이미지 수정 DIV */}
                             <Div width="90%" height="20%">
                                 <Div width="20%" alignItems="center">
                                     <Img borderRadius="70%" border="0.1px solid #e0e0e0;" src={userCur.profile}></Img>
@@ -201,47 +191,70 @@ function EditProfile(props) {
                                         <Label1 for="profileInput">
                                             프로필 사진 바꾸기
                                         </Label1>
-                                        <Input2 type="file" name="profile" onChange={handleFileChange} id="profileInput" >
-                                        </Input2>
+                                        <Input2 type="file" name="profile" onChange={handleFileChange} id="profileInput" />
                                     </Div>
                                 </Div>
                             </Div>
+
+                            {/* 유저 데이터 인풋 용 Form */}
                             <Form width="90%" >
+
+                                {/* 유저 이름 인풋 */}
                                 <Div height="20%">
-                                    <Div width="20%" justifyContent="end" alignItems="center" padding="0 2rem 0 0" boxSizing="border-box" fontWeight="bold"><Label>사용자 이름</Label></Div>
-                                    <Div width="80%" justifyContent="start" alignItems="center"><Input type="text" name="name" value={userCur.name} onChange={handleChange} /></Div>
-
-
-                                </Div>
-                                <Div height="20%">
-                                    <Div width="20%" justifyContent="end" alignItems="start" padding="0.3rem 2rem 0 0" boxSizing="border-box" fontWeight="bold"><Label>소개</Label></Div>
-                                    <Div width="80%" justifyContent="start" alignItems="start"><Textarea height="4rem" name="intro" value={userCur.intro} onChange={handleChange} /></Div>
-
-
-                                </Div>
-                                <Div height="10%">
-                                    <Div width="20%" justifyContent="end" alignItems="center" padding="0 2rem 0 0" boxSizing="border-box" fontWeight="bold"><Label>웹사이트</Label></Div>
-                                    <Div width="80%" justifyContent="start" alignItems="center"><Input type="text" placeholder="링크 추가하기" name="web" value={userCur.web} onChange={handleChange} /></Div>
-
-
-                                </Div>
-                                <Div height="10%" padding="1rem 0 0 0">
-                                    <Div width="20%" justifyContent="end" alignItems="center" padding="0 2rem 0 0" boxSizing="border-box" fontWeight="bold"><Label>이메일</Label></Div>
-                                    <Div width="80%" justifyContent="start" alignItems="center"><Input type="email" placeholder="...@gmail.com" name="email" value={userCur.email} onChange={handleChange} /></Div>
-
-
-                                </Div>
-                                <Div height="10%" padding="1rem 0 0 0">
-                                    <Div width="20%" justifyContent="end" alignItems="center" padding="0 2rem 0 0" boxSizing="border-box" fontWeight="bold"><Label>성별</Label></Div>
+                                    <Div width="20%" justifyContent="end" alignItems="center" padding="0 2rem 0 0" boxSizing="border-box" fontWeight="bold">
+                                        <Label>사용자 이름</Label>
+                                    </Div>
                                     <Div width="80%" justifyContent="start" alignItems="center">
-                                        <Input type="text" name="gender" value={userCur.gender} onChange={handleChange} />
-                                        {/* <Label><Input type="radio" name="gender" value="male" checked={userCur.gender == "male"} onChange={handleChange} />남자</Label> */}
-                                        {/* <Label><Input type="radio" name="gender" value="female" checked={userCur.gender == "female"} onChange={handleChange} />여자</Label> */}
+                                        <Input type="text" name="name" value={userCur.name} onChange={handleChange} />
                                     </Div>
                                 </Div>
+
+                                {/* 유저 소개 인풋 */}
                                 <Div height="20%">
-                                    <Div width="20%" justifyContent="end" alignItems="center"></Div>
-                                    <Div width="80%" justifyContent="start" alignItems="end"><Button type="submit" color="white" disabled={disabled} onClick={handleSubmit}>제출</Button></Div>
+                                    <Div width="20%" justifyContent="end" alignItems="start" padding="0.3rem 2rem 0 0" boxSizing="border-box" fontWeight="bold">
+                                        <Label>소개</Label>
+                                    </Div>
+                                    <Div width="80%" justifyContent="start" alignItems="start">
+                                        <Textarea height="4rem" name="intro" value={userCur.intro} onChange={handleChange} />
+                                    </Div>
+                                </Div>
+
+                                {/* 유저 웹사이트 인풋 */}
+                                <Div height="10%">
+                                    <Div width="20%" justifyContent="end" alignItems="center" padding="0 2rem 0 0" boxSizing="border-box" fontWeight="bold">
+                                        <Label>웹사이트</Label>
+                                    </Div>
+                                    <Div width="80%" justifyContent="start" alignItems="center">
+                                        <Input type="text" placeholder="링크 추가하기" name="web" value={userCur.web} onChange={handleChange} />
+                                    </Div>
+                                </Div>
+
+                                {/* 유저 이메일 인풋 */}
+                                <Div height="10%" padding="1rem 0 0 0">
+                                    <Div width="20%" justifyContent="end" alignItems="center" padding="0 2rem 0 0" boxSizing="border-box" fontWeight="bold">
+                                        <Label>이메일</Label>
+                                    </Div>
+                                    <Div width="80%" justifyContent="start" alignItems="center">
+                                        <Input type="email" placeholder="...@gmail.com" name="email" value={userCur.email} onChange={handleChange} />
+                                    </Div>
+                                </Div>
+
+                                {/* 유저 성별 인풋 */}
+                                <Div height="10%" padding="1rem 0 0 0">
+                                    <Div width="20%" justifyContent="end" alignItems="center" padding="0 2rem 0 0" boxSizing="border-box" fontWeight="bold">
+                                        <Label>성별</Label>
+                                    </Div>
+                                    <Div width="80%" justifyContent="start" alignItems="center">
+                                        <Input type="text" name="gender" value={userCur.gender} onChange={handleChange} />
+                                    </Div>
+                                </Div>
+
+                                {/* 인풋 데이터 수정 버튼 */}
+                                <Div height="20%">
+                                    <Div width="20%" justifyContent="end" alignItems="center" />
+                                    <Div width="80%" justifyContent="start" alignItems="end">
+                                        <Button type="submit" color="white" disabled={disabled} onClick={handleSubmit}>제출</Button>
+                                    </Div>
                                 </Div>
                             </Form>
                         </Div>

@@ -10,9 +10,10 @@ import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { UserContext } from "../contexts/UserContext"
 
-
+/* 전체 푸터 스타일*/
 const Container = styled.div`
-  
+
+  /* 모바일 크기일 때만 활성화*/
   @media screen and (max-width: 450px) {
         width: 100%;
         display: flex;
@@ -25,6 +26,8 @@ const Container = styled.div`
         background-color: white;
         z-index: 10;
     };
+
+    /* 모바일 크기가 아닐경우 비활성화*/
     @media screen and (min-width: 450px) and (max-width: 750px) {
         display: none;
     };
@@ -75,11 +78,13 @@ const Hr = styled.hr`
 
 
 function Footer(props) {
+
+    /* 유저 데이터 호출 */
     const [user, setUser] = useContext(UserContext);
 
     return (
 
-        /* 페이지 전체 컨테이너 */
+        /* 전체 컨테이너 */
         <Container>
             <Hr />
             {/* 페이지 푸터 */}
