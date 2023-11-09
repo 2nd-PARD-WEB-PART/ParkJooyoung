@@ -117,7 +117,7 @@ const Hr = styled.hr`
 function Header(props) {
 
     /* 유저 데이터 호출 */
-    const [user, setUser] = useContext(UserContext);
+    const [user, setUser, userData, setUserData, updateData] = useContext(UserContext);
 
     return (
 
@@ -143,7 +143,7 @@ function Header(props) {
                     <Div width="25px" margin="0 20px 0 0">
                         <Img width="30px" src={Heart} />
                     </Div>
-                    <Link to="/"><Img width="30px" height="30px" borderRadius="70%" src={user.profile} /></Link>
+                    <Link to="/"><Img width="30px" height="30px" borderRadius="70%" src={userData.imgURL} /></Link>
                 </Div>
 
             </HeaderDivLarge>

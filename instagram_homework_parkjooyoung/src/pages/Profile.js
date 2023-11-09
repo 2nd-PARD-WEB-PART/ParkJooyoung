@@ -69,7 +69,7 @@ const HLText = styled.a`
 function Profile(props) {
 
     /* 유저 데이터 호출 */
-    const [user, setUser] = useContext(UserContext);
+    const [user, setUser, userData, setUserData, updateData] = useContext(UserContext);
 
     return (
         /* 프로파일 구역 전체 컨테이너 */
@@ -77,7 +77,7 @@ function Profile(props) {
 
             {/* 왼쪽 이미지 구역 DIV*/}
             <Div width="35%" justifyContent="center">
-                <Link to="/editProfile" ><Img src={user.profile}></Img></Link>
+                <Link to="/editProfile" ><Img src={userData.imgURL}></Img></Link>
             </Div>
 
             {/* 오른쪽 텍스트 구역 DIV*/}
@@ -85,7 +85,7 @@ function Profile(props) {
 
                 {/* 오른쪽 텍스트 구역 중 상단 DIV*/}
                 <Div>
-                    <Text width="10%" fontSize="2.5vh" fontWeight="500">{user.name}</Text>
+                    <Text width="25%" fontSize="2.5vh" fontWeight="500" marginRight="5vh">{userData.name}</Text>
                     <Link to="/editProfile"><Button>프로필 편집</Button></Link>
                 </Div>
 
